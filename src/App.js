@@ -1,15 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { Component } from 'react';
 import Products from './Products.js';
+import JumboTronComponent from './JumboTronComponent.js';
 
 
-function App() {
-  return (
-    <div className="App">
-      <Products /> 
-    </div>
-  );
+class App extends Component {
+  render() { 
+    return (
+      <div>
+        <JumboTronComponent /> 
+      </div>
+    );
+  }
 }
 
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Product from './Product.js';
 
 class Products extends Component {
 
@@ -37,10 +38,11 @@ class Products extends Component {
         }];
     }
 
-    render() {
+    render() { 
         const listProducts = this.products.map((product) =>
-            <Product key={product.productName} data={product} />
+        <Product key={product.productName} data={product} />
         );
+
         return (
             <div>
                 <ul>{listProducts}</ul> 
