@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
-import { Media, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Media, Form, FormGroup, FormControl, Button, Nav } from 'react-bootstrap';
 
 class GitHub extends Component { 
  
@@ -12,11 +12,14 @@ class GitHub extends Component {
             searchTerm:'',
             isLoading : true 
         };
+
+        this.handleChange = this.handleChange.bind(this);  
+        this.handleSubmit = this.handleSubmit.bind(this); 
  
     }
 
     componentDidMount(){
-        this.getGitHubData('greg');
+        //this.getGitHubData('greg');
     }
 
 
@@ -34,15 +37,10 @@ class GitHub extends Component {
     render() {
         const listUsers = this.state.data.map(user =>             
             <Media key={user.id}>
-                <a href={user.html_url}>    
-                    <img
-                        width={64}
-                        height={64}
-                        className="mr-3"
-                        src={user.avatar_url}
-                        alt="Generic placeholder"
-                    />
-                </a>
+                <Nav.Link to={`/github/user/${user.login}/${user.score}`}>
+                    <img width={64} height={64} src={user.avatar_url}
+                    alt="Image"/>
+                </Nav.Link>
                 <Media.Body>
                     <h5>Login: {user.login}</h5>
                     <p>Id: { user.id }</p>
@@ -74,5 +72,21 @@ class GitHub extends Component {
             </div>
         );
     } 
+
+
+    handleSubmit(e) {
+        e.preventDefault();    
+        this.setState({
+            isLoading : true          
+        })                
+        this.getGitHubData(this.state.searchTerm);        
+    }
+
+    handleChange(e) {
+        this.setState({ searchTerm: e.target.value });        
+    }
+
+
 }
+
 export default GitHub;
