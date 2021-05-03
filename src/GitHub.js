@@ -3,7 +3,6 @@ import axios from 'axios';
 import ReactLoading from 'react-loading';
 import { Media, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 
-
 class GitHub extends Component { 
  
     constructor(){
@@ -11,16 +10,13 @@ class GitHub extends Component {
         this.state = {
             data: [],
             searchTerm:'',
-            isLoading : false 
-        }; 
+            isLoading : true 
+        };
+ 
     }
 
-    handleSubmit(e) {
-        e.preventDefault(); 
-        this.setState({
-            isLoading : true 
-        }) 
-        this.getGitHubData(this.state.searchTerm); 
+    componentDidMount(){
+        this.getGitHubData('greg');
     }
 
 
@@ -30,37 +26,41 @@ class GitHub extends Component {
                 this.setState({
                     isLoading : false,
                     data: res.data.items 
-                })  
+                }) 
                 console.log(res.data.items);
-            }); 
-    } 
+            });  
+    }
 
-        render() {
-            const listUsers = this.state.data.map((user) => 
-                <Media key={user.id}>
-                <Media.Left>
-                    <a href={user.html_url}>
-                        <img width={64} height={64} src={user.avatar_url}
-                        alt="Image"/>
+    render() {
+        const listUsers = this.state.data.map(user =>             
+            <Media key={user.id}>
+                <a href={user.html_url}>    
+                    <img
+                        width={64}
+                        height={64}
+                        className="mr-3"
+                        src={user.avatar_url}
+                        alt="Generic placeholder"
+                    />
                 </a>
-                </Media.Left>
                 <Media.Body>
-                    <Media.Heading>{user.login}</Media.Heading>
-                    <p>Score: { user.score }</p>
+                    <h5>Login: {user.login}</h5>
+                    <p>Id: { user.id }</p>
                 </Media.Body>
-                </Media> 
-            ); 
+            </Media>  
+        );
+
         return (
             <div>
                 <Form inline onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="formInlineName"> 
-                        <Form.Control
+                    <FormGroup controlId="formInlineName"> 
+                        <FormControl
                             type="text"
                             value={this.state.searchTerm}
                             placeholder="Enter Search Term"
                             onChange={this.handleChange}
                         />
-                    </Form.Group> 
+                    </FormGroup> 
                     {' '}
                     <Button type="submit">
                         Search
@@ -75,5 +75,4 @@ class GitHub extends Component {
         );
     } 
 }
-
 export default GitHub;

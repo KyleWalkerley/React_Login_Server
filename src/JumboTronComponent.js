@@ -6,7 +6,7 @@ class JumboTronComponent extends Component {
 
     constructor(props){
         super(props); 
-    }
+    }4
 
     render() {
         return (
